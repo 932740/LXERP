@@ -11,9 +11,9 @@ from Crypto.Util.Padding import pad
 from get_token import get_appid, get_appsecret, get_access_token
 
 # ================= 1. 配置信息 =================
-DING_WEBHOOK = "https://oapi.dingtalk.com/robot/send?access_token=c80714f7206ed737257a0d0996f554715c8673a4745cb72b08ee47819b95db57"
-DING_SECRET = "SEC2a056aaf16c152d2c86e51d86f4bfd90ad6db34111d80b62068fe7e0b354b538"
-EMAIL_TO_CHECK = "solaryusa@163.com"
+DING_WEBHOOK = "https://oapi.dingtalk.com/robot/send?access_token=your_accesstoken"
+DING_SECRET = "your_secret"
+EMAIL_TO_CHECK = "your_email"
 
 
 def send_dingtalk_raw(content):
@@ -52,7 +52,7 @@ def get_lx_sign(all_params, app_id):
 
 
 async def get_mail_detail(app_id, access_token, uuid):
-    url = "https://openapi.lingxing.com/erp/sc/data/mail/detail"
+    url = "https://openapi.lingxing.com/your_url"
     biz_params = {"webmail_uuid": uuid}
     query_params = {"access_token": access_token, "app_key": app_id, "timestamp": str(int(time.time()))}
     query_params["sign"] = get_lx_sign({**biz_params, **query_params}, app_id)
@@ -76,7 +76,7 @@ async def main():
 
     unreplied_list = []
 
-    list_url = "https://openapi.lingxing.com/erp/sc/data/mail/lists"
+    list_url = "https://openapi.lingxing.com/your_url"
     biz_list = {"flag": "receive", "email": EMAIL_TO_CHECK, "start_date": start_date, "end_date": end_date, "offset": 0,
                 "length": 200}  # 可以根据需求调整每次查询的长度
     query_list = {"access_token": access_token, "app_key": app_id, "timestamp": str(int(time.time()))}
