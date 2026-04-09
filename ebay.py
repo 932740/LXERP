@@ -4,9 +4,9 @@ import time
 import re
 
 # ================= 配置区 =================
-SERPAPI_KEY = "5f9a191f10d54745f3c40ddaadaf93dd9e585a216e65005d35cf10c13fc4a46d"  # 请填入你的真实 Key
-INPUT_PATH = r"E:\Pycharm Project\pa\热销产品.xlsx"
-OUTPUT_PATH = r"E:\Pycharm Project\pa\全网比价结果.xlsx"
+SERPAPI_KEY = " "  # 请填入你的真实 Key
+INPUT_PATH = r"E:\Pycharm Project\pa\*.xlsx"
+OUTPUT_PATH = r"E:\Pycharm Project\pa\*.xlsx"
 
 # 默认搜索国家
 COUNTRY_CODE = "us"
