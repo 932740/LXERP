@@ -19,10 +19,11 @@ chcp 65001 >nul
 :: 强制 Python 以 UTF-8 编码写入日志
 set PYTHONIOENCODING=utf-8
 
-:: 3. 路径配置 (注意：此处去掉了变量定义时的引号，在后面使用时再统一加引号，更稳妥)
-set "PROJECT_DIR=E:\Pycharm Project\lingxing"
-set "LOG_DIR=E:\Documents\Logs"
-set "PYTHON_EXE=E:\Pycharm Project\.venv\Scripts\python.exe"
+:: 3. 路径配置
+:: 保持了你在变量定义时使用引号，但在调用时也加引号的防御性写法
+set "PROJECT_DIR=C:\Path\To\Your\Project"
+set "LOG_DIR=C:\Path\To\Your\Logs"
+set "PYTHON_EXE=C:\Path\To\Your\venv\Scripts\python.exe"
 
 :: 4. 自动创建日志目录
 if not exist "%LOG_DIR%" mkdir "%LOG_DIR%"
@@ -32,25 +33,25 @@ set LOG_FILE="%LOG_DIR%\Amazon_Task_%date:~0,4%-%date:~5,2%-%date:~8,2%.log"
 
 :: 6. 开始记录任务
 echo ======================================== >> %LOG_FILE%
-echo   任务启动时刻: %date% %time% >> %LOG_FILE%
+echo    Task Started: %date% %time% >> %LOG_FILE%
 echo ======================================== >> %LOG_FILE%
 
-:: 切换到项目目录
+:: 切换到项目工作目录
 cd /d "%PROJECT_DIR%"
 
 :: --- 执行第一个脚本：查询数据 ---
-echo [%time%] 开始运行 asinDaily_list.py... >> %LOG_FILE%
+echo [%time%] Running asinDaily_list.py... >> %LOG_FILE%
 echo 正在执行 asinDaily_list.py...
 "%PYTHON_EXE%" "asinDaily_list.py" >> %LOG_FILE% 2>&1
 
 echo. >> %LOG_FILE%
 
 echo ======================================== >> %LOG_FILE%
-echo   任务全部结束: %date% %time% >> %LOG_FILE%
+echo    Task Completed: %date% %time% >> %LOG_FILE%
 echo ======================================== >> %LOG_FILE%
 
 :: 7. 屏幕提示并退出
 echo 所有程序执行完毕，正在关闭窗口...
-:: 留出3秒显示时间，如果不想要等待可以直接去掉下面这行
+:: 留出 3 秒显示时间
 timeout /t 3 >nul 
 exit
