@@ -12,8 +12,12 @@ import pandas as pd
 from playwright.async_api import async_playwright
 
 # ================= 配置区 =================
+# 请在此处填写你的钉钉机器人配置
 DING_WEBHOOK = "https://oapi.dingtalk.com/robot/send?access_token=your_accesstoken"
 DING_SECRET = "your_secret"
+
+# 请在此处填写你的品牌名称（用于校验卖家身份）
+TARGET_BRAND_KEYWORD = "your_brand" 
 
 # 控制台颜色配置
 RED = "\033[31m"
@@ -32,6 +36,9 @@ stats_lock = asyncio.Lock()
 # ================= 1. 钉钉发送模块 =================
 async def send_dingtalk_msg(content):
     """发送钉钉机器人消息"""
+    if "your_accesstoken" in DING_WEBHOOK:
+        return None # 未配置 Token 时跳过
+
     timestamp = str(round(time.time() * 1000))
     secret_enc = DING_SECRET.encode('utf-8')
     string_to_sign = '{}\n{}'.format(timestamp, DING_SECRET)
@@ -43,7 +50,7 @@ async def send_dingtalk_msg(content):
 
     data = {
         "msgtype": "text",
-        "text": {"content": f"亚马逊巡检预警\n{content}"}
+        "text": {"content": f"巡检预警\n{content}"}
     }
 
     async with aiohttp.ClientSession() as session:
@@ -75,13 +82,13 @@ async def worker(worker_id, browser_context, asins):
             url = f"https://www.amazon.com/dp/{asin}"
             response = await page.goto(url, wait_until="domcontentloaded", timeout=60000)
 
-            # 1. 检查变狗 (404或特定文案)
+            # 1. 检查页面有效性
             title = await page.title()
             if response.status == 404 or "Page Not Found" in title or "Sorry!" in title:
-                error_msg = "链接失效 (404)"
+                error_msg = "链接失效 (404/变狗)"
 
             if not error_msg:
-                # 2. 检查购物车与卖家
+                # 2. 检查购物车与可售状态
                 page_content = await page.content()
                 has_cart = await page.locator("#add-to-cart-button").is_visible()
                 has_buy_now = await page.locator("#buy-now-button").is_visible()
@@ -91,10 +98,11 @@ async def worker(worker_id, browser_context, asins):
                 if not (has_cart or has_buy_now or is_prime or has_options):
                     error_msg = "无黄金购物车或不可售"
                 else:
-                    # 3. 卖家身份校验
+                    # 3. 卖家身份校验 (防跟卖)
                     buybox_area = page.locator("#buybox")
                     buybox_text = await buybox_area.inner_text() if await buybox_area.count() > 0 else ""
-                    if "solary" not in buybox_text.lower() and "solary" not in page_content.lower():
+                    brand_check = TARGET_BRAND_KEYWORD.lower()
+                    if brand_check not in buybox_text.lower() and brand_check not in page_content.lower():
                         error_msg = "卖家错误 (疑似被跟卖)"
 
         except Exception:
@@ -116,31 +124,36 @@ async def worker(worker_id, browser_context, asins):
 
 # ================= 4. 主程序 =================
 async def main():
+    # 自动获取目录下最新的 Excel 文件
     files = glob.glob("*.xlsx")
     if not files:
-        files = glob.glob("*.xlsx")
-    if not files:
-        print("错误: 未找到数据源文件")
+        print("错误: 未找到数据源文件 (.xlsx)")
         return
 
     input_file = max(files, key=os.path.getctime)
     df = pd.read_excel(input_file)
+    
+    # 请确保 Excel 中有名为 'ASIN' 的列
+    if 'ASIN' not in df.columns:
+        print("错误: Excel 文件中未找到 'ASIN' 列")
+        return
+        
     asin_list = df['ASIN'].dropna().unique().tolist()
-
     stats["total"] = len(asin_list)
 
     print(f"数据源: {input_file}")
-    print(f"模式: 3标签页并行 | 钉钉实时预警 | 总计: {stats['total']} 个商品")
+    print(f"模式: 多标签页并行 | 钉钉实时预警 | 总计: {stats['total']} 个商品")
     print("-" * 50)
 
     async with async_playwright() as p:
+        # headless=False 可以看到浏览器过程，部署时可改为 True
         browser = await p.chromium.launch(headless=False)
         context = await browser.new_context(
             viewport={'width': 1366, 'height': 768},
             user_agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36"
         )
 
-        # 任务分片
+        # 任务分片 (默认 3 并发)
         num_workers = 3
         if len(asin_list) > 0:
             chunk_size = (len(asin_list) + num_workers - 1) // num_workers
@@ -156,8 +169,8 @@ async def main():
         print(f"状态异常数量: {stats['abnormal']}")
         print("-" * 50)
 
-        # 结束后发送汇总报告给钉钉
-        summary_msg = f"报告汇总\n总巡检数: {stats['total']}\n正常数: {stats['normal']}\n异常数: {stats['abnormal']}"
+        # 结束后发送汇总报告
+        summary_msg = f"巡检报告汇总\n总数: {stats['total']}\n正常: {stats['normal']}\n异常: {stats['abnormal']}"
         await send_dingtalk_msg(summary_msg)
 
         await browser.close()
