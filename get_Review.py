@@ -68,7 +68,7 @@ async def send_dingtalk_notification(content, webhook_url, secret=None):
 
 async def get_sid_list(app_id, app_secret, access_token):
     """获取所有店铺sid"""
-    url = "https://openapi.lingxing.com/erp/sc/data/seller/lists"
+    url = "https://openapi.lingxing.com/your_url"
     params = {"access_token": access_token, "app_key": app_id, "timestamp": str(int(time.time()))}
     params["sign"] = get_lx_sign(params, app_id)
     async with httpx.AsyncClient() as client:
@@ -85,14 +85,14 @@ async def get_sid_list(app_id, app_secret, access_token):
 
 async def fetch_low_star_reviews():
     # 配置信息
-    webhook_url = "https://oapi.dingtalk.com/robot/send?access_token=2c4b9d154756b89b4440f60d00585ab5f42bfbbd18b8c6492e7ec62b668a0405"
-    secret = "SEC4b2a55321b2ed0fa86ef70cfd4d6dfdd9cb2c05b8da37ab5437194088c87245d"
+    webhook_url = "https://oapi.dingtalk.com/robot/send?access_token=your_token"
+    secret = "your_secret"
 
     app_id = get_appid()
     app_secret = get_appsecret()
     access_token = get_access_token(app_id, app_secret)
 
-    url = "https://openapi.lingxing.com/erp/sc/v2/data/mws/reviews"
+    url = "https://openapi.lingxing.com/your_url"
 
     # 时间记录
     now_time = datetime.now()
