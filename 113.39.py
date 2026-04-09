@@ -6,8 +6,8 @@ import os
 from datetime import datetime
 
 # ================= 配置区 =================
-SERPAPI_KEY = "5f9a191f10d54745f3c40ddaadaf93dd9e585a216e65005d35cf10c13fc4a46d"
-INPUT_PATH = r"E:\Pycharm Project\pa\热销产品.xlsx"
+SERPAPI_KEY = " "
+INPUT_PATH = r"E:\Pycharm Project\pa\ .xlsx"
 
 # 根据日期生成文件名
 current_date = datetime.now().strftime("%Y%m%d")
