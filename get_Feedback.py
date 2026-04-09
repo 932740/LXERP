@@ -12,8 +12,8 @@ from Crypto.Util.Padding import pad
 from get_token import *
 
 # ================= 钉钉配置区 =================
-DINGTALK_WEBHOOK = "https://oapi.dingtalk.com/robot/send?access_token=2c4b9d154756b89b4440f60d00585ab5f42bfbbd18b8c6492e7ec62b668a0405"
-DINGTALK_SECRET = "SEC4b2a55321b2ed0fa86ef70cfd4d6dfdd9cb2c05b8da37ab5437194088c87245d"
+DINGTALK_WEBHOOK = "https://oapi.dingtalk.com/robot/send?access_token=your_token"
+DINGTALK_SECRET = "your_sercret"
 
 
 async def send_dingtalk_notification(content):
@@ -72,7 +72,7 @@ def get_lx_sign(all_params, app_id):
 
 
 async def get_sid_list(app_id, app_secret):
-    url = "https://openapi.lingxing.com/erp/sc/data/seller/lists"
+    url = "https://openapi.lingxing.com/your_url"
     access_token = get_access_token(app_id, app_secret)
     params = {"access_token": access_token, "app_key": app_id, "timestamp": str(int(time.time()))}
     params["sign"] = get_lx_sign(params, app_id)
@@ -91,7 +91,7 @@ async def fetch_feedback_final_v2():
     app_id = get_appid()
     app_secret = get_appsecret()
     access_token = get_access_token(app_id, app_secret)
-    url = "https://openapi.lingxing.com/erp/sc/cs/feedback/listMws"
+    url = "https://openapi.lingxing.com/your_url"
 
     # 获取当前时间
     now_time = datetime.now()
