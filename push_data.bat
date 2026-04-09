@@ -4,7 +4,7 @@ chcp 65001 >nul
 
 :: 1. 定位最新的 Excel
 set "LATEST_FILE="
-for /f "delims=" %%i in ('dir "松立-US_ASIN统计_*.xlsx" /b /o-d /a-d 2^>nul') do (
+for /f "delims=" %%i in ('dir "*.xlsx" /b /o-d /a-d 2^>nul') do (
     set "LATEST_FILE=%%i"
     goto :run_git
 )
