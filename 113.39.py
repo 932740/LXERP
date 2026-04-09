@@ -4,14 +4,18 @@ import time
 import re
 import os
 from datetime import datetime
+from urllib.parse import unquote
 
 # ================= 配置区 =================
-SERPAPI_KEY = " "
-INPUT_PATH = r"E:\Pycharm Project\pa\ .xlsx"
+# 请在此处填写你的 API Key
+SERPAPI_KEY = "" 
+
+# 输入输出路径配置
+INPUT_PATH = r"C:\path\to\your\input_file.xlsx"
 
 # 根据日期生成文件名
 current_date = datetime.now().strftime("%Y%m%d")
-OUTPUT_PATH = rf"E:\Pycharm Project\pa\爬取结果_{current_date}.xlsx"
+OUTPUT_PATH = rf"C:\path\to\your\output_folder\result_{current_date}.xlsx"
 
 PLATFORMS = [
     "Amazon", "TikTok", "AliExpress", "Shopee", "eBay",
@@ -50,7 +54,7 @@ def get_market_data(brand, sku):
             platform = clean_platform_name(source_raw)
 
             if platform in PLATFORMS:
-                # 核心修复逻辑：多路径获取链接
+                # 多路径获取链接
                 final_link = item.get("link")
                 if not final_link:
                     final_link = item.get("product_link")
@@ -59,7 +63,6 @@ def get_market_data(brand, sku):
                 if final_link and "google.com/url" in final_link:
                     match = re.search(r"url=(http[^&]+)", final_link)
                     if match:
-                        from urllib.parse import unquote
                         final_link = unquote(match.group(1))
 
                 results.append({
@@ -85,6 +88,7 @@ def main():
     df = pd.read_excel(INPUT_PATH)
     final_data = []
 
+    # 这里的列名 '核心品牌词', 'SKU', 'MAY' 请确保与 Excel 文件一致
     for index, row in df.iterrows():
         brand = str(row.get('核心品牌词', '')).strip()
         sku = str(row.get('SKU', '')).strip()
@@ -104,7 +108,7 @@ def main():
                 entry = row.to_dict()
                 entry.update(item)
 
-                # 价格对比
+                # 价格对比逻辑
                 try:
                     ext_p = float(item["全网价格"]) if item["全网价格"] else 0
                     if ext_p > 0 and my_price > 0:
@@ -120,6 +124,7 @@ def main():
 
     if final_data:
         output_df = pd.DataFrame(final_data)
+        # 这里的列名排序请根据实际需求调整
         cols_order = [
             '国家', 'ASIN', 'SKU', '核心品牌词', 'MAY',
             '平台来源', '全网价格', '价格单位', '商品标题', '商品链接', '比我便宜'
