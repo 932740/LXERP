@@ -12,8 +12,8 @@ import pandas as pd
 from playwright.async_api import async_playwright
 
 # ================= 配置区 =================
-DING_WEBHOOK = "https://oapi.dingtalk.com/robot/send?access_token=c80714f7206ed737257a0d0996f554715c8673a4745cb72b08ee47819b95db57"
-DING_SECRET = "SEC2a056aaf16c152d2c86e51d86f4bfd90ad6db34111d80b62068fe7e0b354b538"
+DING_WEBHOOK = "https://oapi.dingtalk.com/robot/send?access_token=your_accesstoken"
+DING_SECRET = "your_secret"
 
 # 控制台颜色配置
 RED = "\033[31m"
@@ -95,7 +95,7 @@ async def worker(worker_id, browser_context, asins):
                     buybox_area = page.locator("#buybox")
                     buybox_text = await buybox_area.inner_text() if await buybox_area.count() > 0 else ""
                     if "solary" not in buybox_text.lower() and "solary" not in page_content.lower():
-                        error_msg = "卖家非 solary (疑似被跟卖)"
+                        error_msg = "卖家错误 (疑似被跟卖)"
 
         except Exception:
             error_msg = "网络超时或加载失败"
@@ -116,7 +116,7 @@ async def worker(worker_id, browser_context, asins):
 
 # ================= 4. 主程序 =================
 async def main():
-    files = glob.glob("松立-US_ASIN统计_*.xlsx")
+    files = glob.glob("*.xlsx")
     if not files:
         files = glob.glob("*.xlsx")
     if not files:
