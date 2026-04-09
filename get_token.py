@@ -17,7 +17,7 @@ def get_appsecret():
 
 
 def get_access_token(app_id, app_secret):
-    url = "https://openapi.lingxing.com/api/auth-server/oauth/access-token"
+    url = "  "
 
     # Prepare the data payload
     data = {
@@ -61,8 +61,8 @@ def get_access_token(app_id, app_secret):
 # if __name__ == '__main__':
 #
 #     # Example usage:
-#     app_id = 'ak_QDCz6IZK1BX8A'  # Replace with your actual appId
-#     app_secret = 'TufqJk7LjGOzlQ82URp2kg=='  # Replace with your actual appSecret
+#     app_id = ' '  # Replace with your actual appId
+#     app_secret = ' =='  # Replace with your actual appSecret
 #
 #     try:
 #         token = get_access_token(app_id, app_secret)
