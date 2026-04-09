@@ -1,11 +1,11 @@
 import requests
 from get_access_token import load_config, get_token
 
-
 def fetch_external_chat_ids():
     # 1. 加载配置和获取 Token
     config = load_config()
-    token = get_token(config["corp_id"], config["corp_secret"])
+    # 建议此处确保 config 字典中的 key 与配置文件一致
+    token = get_token(config.get("corp_id", "YOUR_CORP_ID"), config.get("corp_secret", "YOUR_CORP_SECRET"))
 
     if not token:
         print("获取 Token 失败")
@@ -48,7 +48,6 @@ def fetch_external_chat_ids():
 
     except Exception as e:
         print(f"运行出错: {e}")
-
 
 if __name__ == "__main__":
     fetch_external_chat_ids()
