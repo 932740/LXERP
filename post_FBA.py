@@ -11,7 +11,7 @@ def generate_sign(access_token, app_key, timestamp):
 
 # 使用 token 查询 FBA 发货单
 def get_fba_shipment_data(token, start_date, end_date, status=0):
-    url = "https://openapi.lingxing.com/erp/sc/routing/storage/shipment/getInboundShipmentList"
+    url = "https://openapi.lingxing.com/your_url"
 
     # 获取 app_key 和 app_id
     app_key = get_appid()  # 假设这个函数返回 app_key
