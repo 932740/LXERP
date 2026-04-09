@@ -40,7 +40,7 @@ async def get_target_shop_sid(target_name="松立-US"):
     app_id = get_appid()
     app_secret = get_appsecret()
     access_token = get_access_token(app_id, app_secret)
-    url = "https://openapi.lingxing.com/erp/sc/data/seller/lists"
+    url = "https://openapi.lingxing.com/your_url"
     params = {"access_token": access_token, "app_key": app_id, "timestamp": str(int(time.time()))}
     params["sign"] = get_lx_sign(params, app_id)
     async with httpx.AsyncClient() as client:
@@ -64,7 +64,7 @@ async def get_rolling_unique_asins(sid, days_count=10):
     end_dt = datetime.now()
     date_list = [(end_dt - timedelta(days=i)).strftime('%Y-%m-%d') for i in range(days_count)]
 
-    url = "https://openapi.lingxing.com/erp/sc/data/sales_report/asinDailyLists"
+    url = ""
     seen_asins = set()
     export_data = []
 
@@ -126,7 +126,7 @@ def clean_old_reports_to_trash(prefix="松立-US_ASIN统计_"):
 
 # ================= 5. 主执行逻辑 =================
 async def main():
-    shop_name = "松立-US"
+    shop_name = "US"
     sid = await get_target_shop_sid(shop_name)
 
     if sid:
