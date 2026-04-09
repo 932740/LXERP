@@ -12,10 +12,10 @@ cid = config.get("corp_id")
 # --- 配置区 ---
 CONFIG = {
     "corp_id": cid,
-    "secret": "eU2Xx75I6chJDYOPsh7GEK7skKavuM5cF1cKCZM5Dnk",
-    "token": "E4e9Hr8KnUlZ",
-    "aes_key": "F4Qmvverguv5VMGiFoM9eCwoHY7aVFxUZSi0J5177Lw",
-    "agent_id": "1000002"
+    "secret": " ",
+    "token": " ",
+    "aes_key": " ",
+    "agent_id": " "
 }
 
 app = FastAPI()
