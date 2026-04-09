@@ -18,7 +18,7 @@ def load_config(file_path='config.json'):
 
 def get_token(corp_id, corp_secret):
     """获取并返回 access_token"""
-    url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken"
+    url = "https://qyapi.weixin.qq.com/your_token"
     params = {
         "corpid": corp_id,
         "corpsecret": corp_secret
