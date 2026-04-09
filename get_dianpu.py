@@ -12,9 +12,9 @@ from get_token import *
 
 # ================= 钉钉配置 =================
 # 替换为你自己的 Webhook 地址
-DINGTALK_WEBHOOK = "https://oapi.dingtalk.com/robot/send?access_token=1873025bb70bcf820533e6d0eaaeb92046812dab734028e90784ee01435aa8ba"
+DINGTALK_WEBHOOK = "https://oapi.dingtalk.com/robot/send?access_token=your_token"
 # 如果你在机器人安全设置里开启了“加签”，填入密钥；没开则留空
-DINGTALK_SECRET = "SEC5157683c1db0c8229a778a1bdbfaeb95ad1cbdea72aee3a06a77cbc21a686e6a"
+DINGTALK_SECRET = "your_secret"
 
 # ================= 1. 签名算法 =================
 def get_lx_sign(all_params, app_id):
@@ -70,7 +70,7 @@ async def send_dingtalk_msg(content):
 
 # ================= 3. 获取店铺名称映射 =================
 async def get_shop_name_map(app_id, app_secret):
-    url = "https://openapi.lingxing.com/erp/sc/data/seller/lists"
+    url = "https://openapi.lingxing.com/your_url"
     access_token = get_access_token(app_id, app_secret)
     params = {"access_token": access_token, "app_key": app_id, "timestamp": str(int(time.time()))}
     params["sign"] = get_lx_sign(params, app_id)
@@ -138,7 +138,7 @@ async def main():
 
     name_map = await get_shop_name_map(app_id, app_secret)
 
-    url = "https://openapi.lingxing.com/basicOpen/customerService/storeTarget/list"
+    url = "https://openapi.lingxing.com/your_url"
     access_token = get_access_token(app_id, app_secret)
     biz_params = {"offset": 0, "length": 100, "search_field_time": "pull_date", "search_time": target_date}
     query_params = {"access_token": access_token, "app_key": app_id, "timestamp": str(int(time.time()))}
