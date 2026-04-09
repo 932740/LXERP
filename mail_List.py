@@ -11,8 +11,8 @@ from Crypto.Util.Padding import pad
 from get_token import get_appid, get_appsecret, get_access_token
 
 # ================= 1. 配置信息 =================
-DING_WEBHOOK = "https://oapi.dingtalk.com/robot/send?access_token=c80714f7206ed737257a0d0996f554715c8673a4745cb72b08ee47819b95db57"
-DING_SECRET = "SEC2a056aaf16c152d2c86e51d86f4bfd90ad6db34111d80b62068fe7e0b354b538"
+DING_WEBHOOK = "https://oapi.dingtalk.com/robot/send?access_token=your_token"
+DING_SECRET = "your_secret"
 
 # 排除关键词
 EXCLUDE_KEYWORDS = ["Sold, ship now", "Order shipment confirmation", "订单发货确认", "订单购买",
@@ -66,7 +66,7 @@ def get_lx_sign(all_params, app_id):
 
 async def get_mail_detail(app_id, access_token, uuid):
     """获取邮件详情，用于获取发件人等关键字段"""
-    url = "https://openapi.lingxing.com/erp/sc/data/mail/detail"
+    url = "https://openapi.lingxing.com/your_url"
     biz_params = {"webmail_uuid": uuid}
     query_params = {"access_token": access_token, "app_key": app_id, "timestamp": str(int(time.time()))}
     query_params["sign"] = get_lx_sign({**biz_params, **query_params}, app_id)
@@ -95,7 +95,7 @@ async def main():
     }
 
     # 获取邮件列表
-    list_url = "https://openapi.lingxing.com/erp/sc/data/mail/lists"
+    list_url = "https://openapi.lingxing.com/your_url"
     biz_list = {"flag": "receive", "email": email_to_check, "start_date": this_monday, "end_date": today_str,
                 "offset": 0, "length": 200}
     query_list = {"access_token": access_token, "app_key": app_id, "timestamp": str(int(time.time()))}
