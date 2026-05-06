@@ -42,8 +42,6 @@
 2. 配置钉钉机器人Webhook（用于接收通知）
 3. 根据需要修改各脚本中的参数
 
-### 使用方式
-Windows用户可直接运行 `Windows批量执行脚本.bat` 批量执行所有脚本，或单独运行各Python脚本。
 
 ## 项目结构 | Project Structure
 
@@ -108,8 +106,6 @@ A Python script collection for automating daily Lingxing ERP operations, support
 2. Configure DingTalk bot webhook for notifications
 3. Modify parameters in scripts as needed
 
-### Usage
-Run `Windows批量执行脚本.bat` to execute all scripts in batch, or run individual Python scripts.
 
 ## Project Structure
 
