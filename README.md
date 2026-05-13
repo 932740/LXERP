@@ -60,10 +60,6 @@ LXERP/
 └── 获取系统token/              # 系统Token
 ```
 
-## 许可证 | License
-
-MIT License
-
 ---
 
 # LXERP Lingxing ERP Automation Toolkit
@@ -124,6 +120,3 @@ LXERP/
 └── 获取系统token/              # System Token
 ```
 
-## License
-
-MIT License
