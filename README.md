@@ -1,122 +1,134 @@
-# LXERP 领星ERP自动化工具集
+# LXERP 领星 ERP 自动化工具集
 
-一套用于自动化处理领星ERP日常运营任务的Python脚本集合，支持亚马逊、eBay多平台运营数据管理。
+一套面向跨境电商业务场景的自动化工具集合，基于 Python 构建，用于提升 Amazon 店铺日常运营与数据处理效率。
 
-[English](#lxerp-lingxing-erp-automation-toolkit) | 中文
-
----
-
-## 功能模块
-
-### 📦 订单与发货
-- **获取FBA发货单** / FBA Shipment Fetcher - 自动抓取FBA发货单数据
-
-### 📧 客户服务
-- **24小时推送邮件** / 24-Hour Email Pusher - 监控并推送未处理邮件
-- **24小时站内信** / 24-Hour Message Pusher - 监控未回复站内信并推送至钉钉
-
-### ⭐ 评价管理
-- **Review差评监控** / Negative Review Monitor - 自动获取Review中差评并推送至钉钉
-- **Feedback差评监控** / Negative Feedback Monitor - 自动获取Feedback中差评并推送至钉钉
-
-### 🛒 销售数据
-- **Amazon列表管理** / Amazon Listing Manager - 亚马逊商品列表管理
-- **ASIN日报** / ASIN Daily Report - 每日ASIN数据跟踪
-- **eBay数据管理** / eBay Data Manager - eBay平台数据处理
-
-### ⚠️ 预警通知
-- **店铺异常监控** / Store Health Monitor - 监控店铺异常状态并推送至钉钉
-
-## 技术栈 | Tech Stack
-- **Python 3** - 主要开发语言
-- **钉钉机器人** / DingTalk Bot - 企业级消息推送
-
-## 快速开始 | Quick Start
-
-### 环境要求
-- Python 3.7+
-- 领星ERP账号
-
-### 配置说明
-1. 配置领星ERP登录凭证
-2. 配置钉钉机器人Webhook（用于接收通知）
-3. 根据需要修改各脚本中的参数
-
-
-## 项目结构 | Project Structure
-
-```
-LXERP/
-├── Amazon_list.py              # 亚马逊列表
-├── asinDaily_list.py           # ASIN日报
-├── ebay.py                     # eBay数据
-├── Windows批量执行脚本.bat      # Windows批量执行
-├── 获取FBA发货单/               # FBA发货单
-├── 获取24小时推送邮件/          # 邮件监控
-├── 获取24小时站内信未回复并推送钉钉/  # 站内信监控
-├── 获取Review中差评并推送至钉钉/    # Review差评
-├── 获取feedback中差评并推送至钉钉/  # Feedback差评
-├── 获取店铺异常信息并推送至钉钉/    # 店铺异常
-└── 获取系统token/              # 系统Token
-```
+项目主要围绕订单管理、库存预警、客户消息监控、差评通知及运营数据自动化处理等场景，减少人工重复操作，并通过企业消息通知实现业务异常实时提醒。
 
 ---
 
-# LXERP Lingxing ERP Automation Toolkit
+# 项目背景
 
-A Python script collection for automating daily Lingxing ERP operations, supporting Amazon and eBay multi-platform seller operations.
+在 Amazon 多店铺运营场景下，日常会存在：
 
-## Features
+- 多店铺订单数据分散
+- 人工导出报表效率低
+- 客服消息容易遗漏
+- 差评无法及时发现
+- 店铺异常状态响应不及时
 
-### 📦 Orders & Fulfillment
-- **FBA Shipment Fetcher** - Automatically fetch FBA shipment data
+因此构建该工具集，实现：
 
-### 📧 Customer Service
-- **24-Hour Email Pusher** - Monitor and push unprocessed emails
-- **24-Hour Message Pusher** - Monitor unread messages and push to DingTalk
+- 自动数据采集
+- 自动业务通知
+- 自动异常监控
+- 自动运营数据处理
 
-### ⭐ Review Management
-- **Negative Review Monitor** - Auto-fetch negative reviews and push to DingTalk
-- **Negative Feedback Monitor** - Auto-fetch negative feedback and push to DingTalk
+提升日常运营与数据处理效率。
 
-### 🛒 Sales Data
-- **Amazon Listing Manager** - Amazon product listing management
-- **ASIN Daily Report** - Daily ASIN data tracking
-- **eBay Data Manager** - eBay platform data processing
+---
 
-### ⚠️ Alerts & Notifications
-- **Store Health Monitor** - Monitor store anomalies and push to DingTalk
+# 核心功能
 
-## Tech Stack
-- **Python 3** - Primary language
-- **DingTalk Bot** - Enterprise notification
+## 📦 订单与发货
 
-## Quick Start
+### FBA 发货单自动获取
+自动抓取 Amazon FBA 发货单数据，减少人工下载与整理工作。
 
-### Requirements
+---
+
+## 📧 客户服务
+
+### 24 小时邮件监控
+自动监控未处理邮件，并推送至钉钉群提醒客服处理。
+
+### 24 小时站内信监控
+监控 Amazon 站内信未回复状态，并自动推送消息通知。
+
+---
+
+## ⭐ 差评监控
+
+### Review 差评监控
+自动获取商品 Review 差评并推送至钉钉。
+
+### Feedback 差评监控
+自动获取 Feedback 差评并进行实时提醒。
+
+帮助运营与客服及时处理用户问题。
+
+---
+
+## 🛒 销售数据处理
+
+### Amazon Listing 管理
+自动获取并处理 Amazon 商品列表数据。
+
+### ASIN 日报统计
+自动统计每日 ASIN 数据变化情况。
+
+---
+
+## ⚠️ 店铺异常预警
+
+### 店铺状态监控
+监控店铺异常状态，并自动推送告警信息。
+
+支持业务异常实时提醒与快速处理。
+
+---
+
+# 技术实现
+
+- Python 3
+- REST API 接口调用
+- DingTalk Bot 企业消息推送
+- 自动化数据采集
+- 定时任务执行
+- Docker 容器化部署（部分工具）
+
+---
+
+# 项目特点
+
+- 面向真实业务场景
+- 支持多店铺数据联动
+- 自动化异常监控
+- 减少人工重复操作
+- 支持企业消息实时通知
+- 可快速部署与扩展
+
+---
+
+# 快速开始
+
+## 环境要求
+
 - Python 3.7+
-- Lingxing ERP account
+- 领星 ERP 账号
+- 钉钉机器人 Webhook
 
-### Configuration
-1. Configure Lingxing ERP credentials
-2. Configure DingTalk bot webhook for notifications
-3. Modify parameters in scripts as needed
+---
 
+## 配置步骤
 
-## Project Structure
+1. 配置领星 ERP 登录信息
+2. 配置钉钉机器人 Webhook
+3. 修改脚本中的业务参数
+4. 执行对应脚本即可运行
 
-```
+---
+
+# 项目结构
+
+```text
 LXERP/
-├── Amazon_list.py              # Amazon Listing
-├── asinDaily_list.py           # ASIN Daily Report
-├── ebay.py                     # eBay Data
-├── Windows批量执行脚本.bat      # Windows Batch Runner
-├── 获取FBA发货单/               # FBA Shipment
-├── 获取24小时推送邮件/          # Email Monitor
-├── 获取24小时站内信未回复并推送钉钉/  # Message Monitor
-├── 获取Review中差评并推送至钉钉/    # Negative Reviews
-├── 获取feedback中差评并推送至钉钉/  # Negative Feedback
-├── 获取店铺异常信息并推送至钉钉/    # Store Alerts
-└── 获取系统token/              # System Token
-```
-
+├── Amazon_list.py
+├── asinDaily_list.py
+├── Windows批量执行脚本.bat
+├── 获取FBA发货单/
+├── 获取24小时推送邮件/
+├── 获取24小时站内信未回复并推送钉钉/
+├── 获取Review中差评并推送至钉钉/
+├── 获取feedback中差评并推送至钉钉/
+├── 获取店铺异常信息并推送至钉钉/
+└── 获取系统token/
